@@ -8,9 +8,11 @@ import Image from 'next/image';
 
 const CATEGORIES = [
   { key: 'all', label: 'All Projects' },
-  { key: 'websites', label: 'Websites' },
-  { key: 'apps', label: 'Apps' },
+  { key: 'website', label: 'Websites' },
+  { key: 'app', label: 'Apps' },
   { key: 'branding', label: 'Branding' },
+  { key: 'video', label: 'Video Editing' },
+  { key: 'marketing', label: 'Marketing' },
 ];
 
 const cardVariants = {
@@ -31,9 +33,11 @@ const cardVariants = {
 
 // Unique accent per category
 const CATEGORY_COLORS: Record<string, { gradient: string; badge: string }> = {
-  websites: { gradient: 'from-electric-blue/20 via-purple/10 to-cyan/20', badge: 'text-electric-blue border-electric-blue/20' },
-  apps: { gradient: 'from-neon-green/20 via-cyan/10 to-electric-blue/20', badge: 'text-neon-green border-neon-green/20' },
+  website: { gradient: 'from-electric-blue/20 via-purple/10 to-cyan/20', badge: 'text-electric-blue border-electric-blue/20' },
+  app: { gradient: 'from-neon-green/20 via-cyan/10 to-electric-blue/20', badge: 'text-neon-green border-neon-green/20' },
   branding: { gradient: 'from-accent-pink/20 via-neon-orange/10 to-amber/20', badge: 'text-accent-pink border-accent-pink/20' },
+  video: { gradient: 'from-purple/20 via-accent-pink/10 to-neon-purple/20', badge: 'text-purple border-purple/20' },
+  marketing: { gradient: 'from-amber/20 via-gold/10 to-neon-orange/20', badge: 'text-amber border-amber/20' },
 };
 
 export default function PortfolioPage({ initialProjects }: { initialProjects: any[] }) {

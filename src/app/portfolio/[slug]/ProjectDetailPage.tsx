@@ -32,9 +32,11 @@ interface ProjectData {
 }
 
 const CATEGORY_COLORS: Record<string, { gradient: string; accent: string }> = {
-  websites: { gradient: 'from-electric-blue/20 via-purple/10 to-cyan/20', accent: 'text-electric-blue' },
-  apps: { gradient: 'from-neon-green/20 via-cyan/10 to-electric-blue/20', accent: 'text-neon-green' },
+  website: { gradient: 'from-electric-blue/20 via-purple/10 to-cyan/20', accent: 'text-electric-blue' },
+  app: { gradient: 'from-neon-green/20 via-cyan/10 to-electric-blue/20', accent: 'text-neon-green' },
   branding: { gradient: 'from-accent-pink/20 via-neon-orange/10 to-amber/20', accent: 'text-accent-pink' },
+  video: { gradient: 'from-purple/20 via-accent-pink/10 to-neon-purple/20', accent: 'text-purple' },
+  marketing: { gradient: 'from-amber/20 via-gold/10 to-neon-orange/20', accent: 'text-amber' },
 };
 
 export default function ProjectDetailPage({ project, allProjects }: { project: any; allProjects: any[] }) {
@@ -89,7 +91,7 @@ export default function ProjectDetailPage({ project, allProjects }: { project: a
           <p className="body-large max-w-[700px] mb-6">{project.description}</p>
 
           {/* Meta Bar */}
-          <div className="flex flex-wrap gap-6 text-sm text-text-secondary mb-10">
+          <div className="flex flex-wrap gap-6 text-sm text-text-secondary mb-8">
             {project.client_name && (
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4 text-amber" />
@@ -107,19 +109,53 @@ export default function ProjectDetailPage({ project, allProjects }: { project: a
               <span className="capitalize">{project.category}</span>
             </div>
           </div>
+
+          {/* Action Buttons */}
+          <div className="flex flex-wrap gap-4 mb-12">
+            {project.live_url && (
+              <a 
+                href={project.live_url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="btn-primary !py-2.5 !px-6 text-sm"
+              >
+                <span>View Live Project</span>
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            )}
+            <Link 
+              href="/contact" 
+              className="btn-ghost !py-2.5 !px-6 text-sm"
+            >
+              <span>Get Similar Project</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </motion.div>
 
-        {/* Hero Image Placeholder */}
+        {/* Project Image */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className={`relative h-[300px] md:h-[450px] rounded-2xl bg-gradient-to-br ${colors.gradient} mb-16 flex items-center justify-center overflow-hidden border border-white/5`}
+          className={`relative aspect-video rounded-2xl bg-gradient-to-br ${colors.gradient} mb-16 overflow-hidden border border-white/5 group shadow-2xl`}
         >
-          <span className="text-[120px] md:text-[200px] font-black text-white/8 select-none">
-            {project.title[0]}
-          </span>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050816]/60 to-transparent" />
+          {project.thumbnail_url ? (
+            <Image 
+              src={project.thumbnail_url} 
+              alt={project.title} 
+              fill 
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+              priority
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-[120px] md:text-[200px] font-black text-white/8 select-none">
+                {project.title[0]}
+              </span>
+            </div>
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050816]/40 to-transparent pointer-events-none" />
         </motion.div>
 
         {/* Challenge & Solution */}

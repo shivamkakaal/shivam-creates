@@ -171,11 +171,22 @@ export default function MediaLibrary({ onSelect, onCancel }: { onSelect?: (url: 
             <input type="file" className="hidden" onChange={handleFileUpload} accept="image/*" disabled={isUploading} />
           </label>
         </div>
-        {onCancel && (
-          <button onClick={onCancel} className="p-2 text-text-muted hover:text-foreground">
-            <X className="w-5 h-5" />
-          </button>
-        )}
+        <div className="flex items-center gap-2">
+          {selectedAsset && onSelect && (
+            <button 
+              onClick={() => onSelect(selectedAsset.public_url)}
+              className="lg:hidden flex items-center gap-2 px-4 py-2 rounded-lg bg-amber text-black text-sm font-bold shadow-lg active:scale-95 transition-all"
+            >
+              <Check className="w-4 h-4" />
+              <span>Select</span>
+            </button>
+          )}
+          {onCancel && (
+            <button onClick={onCancel} className="p-2 text-text-muted hover:text-foreground">
+              <X className="w-5 h-5" />
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="flex-1 flex overflow-hidden">
@@ -198,7 +209,13 @@ export default function MediaLibrary({ onSelect, onCancel }: { onSelect?: (url: 
                 className={`group relative aspect-square rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
                   selectedAsset?.id === asset.id ? 'border-amber shadow-[0_0_15px_rgba(251,191,36,0.3)]' : 'border-white/5 hover:border-white/20'
                 }`}
-                onClick={() => setSelectedAsset(asset)}
+                onClick={() => {
+                  if (selectedAsset?.id === asset.id && onSelect) {
+                    onSelect(asset.public_url);
+                  } else {
+                    setSelectedAsset(asset);
+                  }
+                }}
               >
                 <Image 
                   src={asset.public_url} 
@@ -209,6 +226,11 @@ export default function MediaLibrary({ onSelect, onCancel }: { onSelect?: (url: 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2">
                   <p className="text-[10px] text-white truncate w-full font-medium">{asset.filename}</p>
                 </div>
+                {selectedAsset?.id === asset.id && (
+                  <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-amber text-black flex items-center justify-center shadow-lg animate-in zoom-in duration-200">
+                    <Check className="w-4 h-4" />
+                  </div>
+                )}
               </div>
             ))
           )}
