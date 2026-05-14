@@ -6,13 +6,15 @@ export const metadata = {
   title: 'Edit Service | Admin',
 };
 
-export default async function EditServicePage({ params }: { params: { id: string } }) {
+export default async function EditServicePage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
   const supabase = await createClient();
 
   const { data: service, error } = await supabase
     .from('services')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .single();
 
   if (error || !service) {

@@ -6,13 +6,15 @@ export const metadata = {
   title: 'Edit Project | Admin',
 };
 
-export default async function EditProjectPage({ params }: { params: { id: string } }) {
+export default async function EditProjectPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
   const supabase = await createClient();
 
   const { data: project, error } = await supabase
     .from('projects')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .single();
 
   if (error || !project) {
