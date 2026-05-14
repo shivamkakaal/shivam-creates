@@ -37,8 +37,8 @@ export default async function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Brand */}
           <div className="lg:col-span-1 flex flex-col items-center text-center lg:items-start lg:text-left">
-            <Link href="/" className="block -mt-6 -mb-6 lg:-mt-10 lg:-mb-10 flex justify-center lg:justify-start w-full">
-              <div className="relative h-[140px] w-[320px] lg:h-[180px] lg:w-[420px]">
+            <Link href="/" className="block mb-6 lg:mb-8 flex justify-center lg:justify-start w-full">
+              <div className="relative h-[60px] w-[190px] lg:h-[80px] lg:w-[250px] transition-all duration-300">
                 <Image 
                   src="/images/logo-main.png" 
                   alt="Shivam Creates Logo" 

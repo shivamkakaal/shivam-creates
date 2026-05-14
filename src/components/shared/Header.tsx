@@ -40,18 +40,37 @@ export default function Header() {
       >
         <div className="max-w-[1280px] mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-[88px]">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 group -ml-2 lg:-ml-4">
-              <div className="relative h-[80px] w-64 lg:h-[90px] lg:w-[300px] scale-[1.8] sm:scale-[2] lg:scale-[2.5] origin-left transition-transform duration-300">
-                <Image 
-                  src="/images/logo-main.png" 
-                  alt="Shivam Creates Logo" 
-                  fill
-                  className="object-contain"
-                  priority
-                />
-              </div>
-            </Link>
+            {/* Mobile Left Section & Desktop Logo */}
+            <div className="flex items-center gap-2 sm:gap-4">
+              {/* Mobile Hamburger */}
+              <button
+                onClick={() => setIsMobileOpen(!isMobileOpen)}
+                className="lg:hidden p-2 -ml-2 text-text-secondary hover:text-foreground transition-colors relative z-20"
+                aria-label="Toggle menu"
+              >
+                {isMobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+
+              {/* Logo */}
+              <Link href="/" className="flex items-center group relative z-10">
+                <div className="relative h-[24px] w-[90px] sm:h-[32px] sm:w-[120px] lg:h-[45px] lg:w-[160px] transition-all duration-300">
+                  <Image 
+                    src="/images/logo-main.png" 
+                    alt="Shivam Creates Logo" 
+                    fill
+                    className="object-contain object-left"
+                    priority
+                  />
+                </div>
+              </Link>
+            </div>
+
+            {/* Mobile Quick Links (Right side on mobile) */}
+            <div className="flex lg:hidden items-center gap-3 sm:gap-4 relative z-20">
+              <Link href="/" className="text-[13px] font-medium text-text-secondary hover:text-foreground transition-colors">Home</Link>
+              <Link href="/portfolio" className="text-[13px] font-medium text-text-secondary hover:text-foreground transition-colors">Portfolio</Link>
+              <Link href="/services" className="text-[13px] font-medium text-text-secondary hover:text-foreground transition-colors">Services</Link>
+            </div>
 
             {/* Desktop Nav */}
             <nav className="hidden lg:flex items-center gap-1 relative z-20">
@@ -72,15 +91,6 @@ export default function Header() {
                 <span>Book Free Call</span>
               </Link>
             </div>
-
-            {/* Mobile Hamburger */}
-            <button
-              onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="lg:hidden p-2 text-text-secondary hover:text-foreground transition-colors relative z-20"
-              aria-label="Toggle menu"
-            >
-              {isMobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
           </div>
         </div>
       </motion.header>
