@@ -3,19 +3,13 @@
 import { useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight, Play } from 'lucide-react';
 
 const HERO_WORDS = ['Experiences', 'Websites', 'Brands', 'Products'];
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end start'],
-  });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   return (
     <section
@@ -36,7 +30,6 @@ export default function Hero() {
 
       {/* Content */}
       <motion.div
-        style={{ y, opacity }}
         className="relative z-10 w-full max-w-[1280px] mx-auto px-6 lg:px-8"
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
