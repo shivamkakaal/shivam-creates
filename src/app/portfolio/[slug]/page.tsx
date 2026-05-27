@@ -5,6 +5,8 @@ import Footer from '@/components/shared/Footer';
 import ProjectDetailPage from './ProjectDetailPage';
 import { createClient } from '@supabase/supabase-js';
 
+export const revalidate = 60; // ISR 1 minute
+
 const getSupabase = () => createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
