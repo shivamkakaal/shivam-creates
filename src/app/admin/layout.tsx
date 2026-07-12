@@ -12,7 +12,7 @@ export default async function AdminLayout({
   const headersList = await headers();
   const pathname = headersList.get('x-next-pathname') || headersList.get('x-invoke-path') || '';
   
-  // Skip auth check for the login page (middleware handles auth redirects)
+  // Skip auth check for the login page (proxy handles auth redirects)
   const isLoginPage = pathname.includes('/admin/login');
   if (isLoginPage) {
     return <>{children}</>;
