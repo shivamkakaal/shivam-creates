@@ -27,10 +27,13 @@ export async function proxy(request: NextRequest) {
     }
   );
 
-  // refreshing the auth token
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  let user = null;
+  try {
+    const { data } = await supabase.auth.getUser();
+    user = data.user;
+  } catch (error) {
+    console.error('Proxy Supabase Auth Error:', error);
+  }
 
   const isAuthRoute = request.nextUrl.pathname.startsWith('/admin/login');
   const isAdminRoute = request.nextUrl.pathname.startsWith('/admin');
