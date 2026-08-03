@@ -34,7 +34,7 @@ export async function POST(request: Request) {
       howFound 
     } = validationResult.data;
 
-    const { data, error } = await supabaseAdmin
+    const { error } = await supabaseAdmin
       .from('leads')
       .insert([
         {
@@ -51,8 +51,7 @@ export async function POST(request: Request) {
           source: 'project_form',
           status: 'new',
         },
-      ])
-      .select();
+      ]);
 
     if (error) {
       console.error('Supabase error inserting project lead:', error);
@@ -63,7 +62,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json(
-      { success: true, message: 'Project requirements submitted successfully!', data },
+      { success: true, message: 'Project requirements submitted successfully!' },
       { status: 200 }
     );
   } catch (error) {

@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     const { fullName, email, phone, projectType, budget, message } = validationResult.data;
 
     // Insert into leads table
-    const { data, error } = await supabaseAdmin
+    const { error } = await supabaseAdmin
       .from('leads')
       .insert([
         {
@@ -40,8 +40,7 @@ export async function POST(request: Request) {
           source: 'contact_form',
           status: 'new',
         },
-      ])
-      .select();
+      ]);
 
     if (error) {
       console.error('Supabase error inserting contact lead:', error);
@@ -54,7 +53,7 @@ export async function POST(request: Request) {
     // TODO: Send email notification via Resend here if configured
 
     return NextResponse.json(
-      { success: true, message: 'Message sent successfully!', data },
+      { success: true, message: 'Message sent successfully!' },
       { status: 200 }
     );
   } catch (error) {

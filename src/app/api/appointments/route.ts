@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     const { service, date, time, fullName, email, phone, budget, message } = validationResult.data;
 
     // 1. Create a lead first
-    const { data: leadData, error: leadError } = await supabaseAdmin
+    const { error: leadError } = await supabaseAdmin
       .from('leads')
       .insert([
         {
@@ -37,9 +37,7 @@ export async function POST(request: Request) {
           source: 'booking',
           status: 'new',
         },
-      ])
-      .select()
-      .single();
+      ]);
 
     if (leadError) {
       console.error('Supabase error inserting lead for booking:', leadError);
@@ -50,17 +48,13 @@ export async function POST(request: Request) {
     }
 
     // Combine date and time for scheduled_at
-    // Assumes date is YYYY-MM-DD and time is like "10:30 AM"
-    // Since this is a simple implementation, we'll store the time string as well in admin_notes 
-    // or just construct a valid Date object if possible.
     const scheduledAt = new Date(`${date} ${time}`);
 
     // 2. Create the appointment
-    const { data: appointmentData, error: appointmentError } = await supabaseAdmin
+    const { error: appointmentError } = await supabaseAdmin
       .from('appointments')
       .insert([
         {
-          lead_id: leadData.id,
           full_name: fullName,
           email,
           phone,
@@ -70,8 +64,7 @@ export async function POST(request: Request) {
           admin_notes: `Requested Time: ${time} on ${date}`,
           status: 'confirmed',
         },
-      ])
-      .select();
+      ]);
 
     if (appointmentError) {
       console.error('Supabase error inserting appointment:', appointmentError);
@@ -82,7 +75,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json(
-      { success: true, message: 'Appointment booked successfully!', data: appointmentData },
+      { success: true, message: 'Appointment booked successfully!' },
       { status: 200 }
     );
   } catch (error) {
