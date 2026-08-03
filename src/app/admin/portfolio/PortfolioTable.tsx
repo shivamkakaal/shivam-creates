@@ -110,7 +110,7 @@ export default function PortfolioTable({ initialProjects }: { initialProjects: P
                 </button>
               </td>
               <td className="px-6 py-4 text-right">
-                <div className="flex items-center justify-end gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                <div className="flex items-center justify-end gap-2">
                   {project.live_url && (
                     <a 
                       href={project.live_url} 
